@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday Dhwani 🎂</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff0f6;--card:#ffffff;--text:#4a1d33;--muted:#9c5b78;--accent:#ec4899;--accent2:#f9a8d4;--soft:#fce7f3}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a0f1e;--card:#3b1629;--text:#ffe4f0;--muted:#f0a6c6;--accent:#f472b6;--accent2:#be185d;--soft:#4a1d33}}
+:root[data-theme="dark"]{--bg:#2a0f1e;--card:#3b1629;--text:#ffe4f0;--muted:#f0a6c6;--accent:#f472b6;--accent2:#be185d;--soft:#4a1d33}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Georgia,"Times New Roman",serif;overflow-x:hidden}
+.hero{text-align:center;padding:56px 20px 40px;background:radial-gradient(circle at 50% 0,var(--accent2),transparent 70%)}
+.cake{font-size:72px;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10px)}}
+h1{font-size:clamp(34px,9vw,60px);margin:8px 0;color:var(--accent);line-height:1.1}
+.sub{color:var(--muted);font-size:18px;margin:0 0 22px}
+button{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:12px 26px;background:var(--accent);color:#fff;font-size:16px;box-shadow:0 6px 16px rgba(236,72,153,.35)}
+button:active{transform:scale(.97)}
+main{max-width:720px;margin:0 auto;padding:10px 18px 50px}
+h2{text-align:center;color:var(--accent);margin:28px 0 16px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.w{background:var(--card);border:1px solid var(--soft);border-radius:18px;padding:18px;box-shadow:0 4px 14px rgba(236,72,153,.12)}
+.w b{display:block;color:var(--accent);margin-top:10px;font-size:14px}
+form{display:grid;gap:10px;background:var(--card);border:1px solid var(--soft);border-radius:18px;padding:18px}
+input,textarea{font:inherit;padding:12px;border-radius:12px;border:1px solid var(--accent2);background:var(--bg);color:var(--text);width:100%}
+footer{text-align:center;color:var(--muted);padding:10px 0 30px}
+.c{position:fixed;top:-20px;font-size:22px;pointer-events:none;animation:fall linear forwards;z-index:9}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.8}}
+.dance{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.d{position:absolute;bottom:-60px;opacity:.28;animation:rise linear infinite}
+.d i{display:block;font-style:normal;animation:sway 1.4s ease-in-out infinite alternate}
+@keyframes rise{to{transform:translateY(-120vh)}}
+@keyframes sway{from{transform:rotate(-18deg) scale(.95)}to{transform:rotate(18deg) scale(1.1)}}
+.hero,main,footer{position:relative;z-index:1}
+.gate{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;background:radial-gradient(circle at 50% 30%,var(--accent2),var(--bg) 75%);transition:opacity .6s}
+.gate.off{opacity:0;pointer-events:none}
+#mute{display:none;position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:15;padding:10px 14px}
+a.song{display:inline-block;margin-top:16px;color:var(--accent);font-size:16px}
+</style>
+</head>
+<body>
+<audio id="song" loop preload="auto" src="song.mp3"></audio>
+<div class="dance" id="dance"></div>
+<div class="gate" id="gate"><div><div class="cake">🎁</div><h1>For Dhwani 💖</h1><p class="sub">Tap to open your birthday surprise</p><button id="open">Open 🎀</button></div></div>
+<section class="hero">
+  <div class="cake">🎂</div>
+  <h1>Happy Birthday, Dhwani!</h1>
+  <p class="sub">Wishing you a day as sweet and bright as you are 💖</p>
+  <button id="party">Tap for a surprise 🎉</button>
+</section>
+<main>
+  <h2>Wishes for you</h2>
+  <div class="grid" id="wishes">
+    <div class="w">May this year bring you endless smiles, big dreams and even bigger cakes. 🌸<b>— With love</b></div>
+    <div class="w">You make every moment brighter. Never stop shining, Dhwani! ✨</div>
+    <div class="w">Here’s to laughter, pink sunsets and everything your heart wishes for. 💕</div>
+  </div>
+  <h2>Add your wish</h2>
+  <form id="f">
+    <input id="n" placeholder="Your name" maxlength="40" required>
+    <textarea id="m" rows="3" placeholder="Write a birthday wish…" maxlength="300" required></textarea>
+    <button type="submit">Send wish 💌</button>
+  </form>
+</main>
+<button id="mute" aria-label="Music on/off">🔊</button>
+<footer>Made by Sarkaar 💗</footer>
+<script>
+function party(){
+  var e=["🎉","💖","🌸","🎈","✨","🎀","💕"];
+  for(var i=0;i<40;i++){
+    var s=document.createElement("span");
+    s.className="c";s.textContent=e[i%e.length];
+    s.style.left=Math.random()*100+"vw";
+    s.style.animationDuration=(2+Math.random()*2.5)+"s";
+    s.style.animationDelay=Math.random()*.8+"s";
+    document.body.appendChild(s);
+    setTimeout(function(x){x.remove()},5500,s);
+  }
+}
+(function(){
+  var e=["💃","🩰","🎶","🕺","🎵","💃"],h=document.getElementById("dance");
+  for(var i=0;i<16;i++){
+    var d=document.createElement("div");d.className="d";
+    d.style.left=(Math.random()*92)+"vw";
+    d.style.fontSize=(28+Math.random()*30)+"px";
+    d.style.animationDuration=(9+Math.random()*9)+"s";
+    d.style.animationDelay=(-Math.random()*14)+"s";
+    var s=document.createElement("i");s.textContent=e[i%e.length];
+    s.style.animationDelay=(-Math.random())+"s";
+    d.appendChild(s);h.appendChild(d);
+  }
+})();
+document.getElementById("party").onclick=party;
+document.getElementById("mute").onclick=function(){var a=document.getElementById("song");if(a.paused){a.play();this.textContent="🔊"}else{a.pause();this.textContent="🔇"}};
+document.getElementById("open").onclick=function(){
+  var g=document.getElementById("gate");g.classList.add("off");
+  setTimeout(function(){g.remove()},700);party();
+  var a=document.getElementById("song");try{a.volume=.8;a.play().catch(function(){});}catch(e){}
+  document.getElementById("mute").style.display="block";
+};
+document.getElementById("f").onsubmit=function(ev){
+  ev.preventDefault();
+  var d=document.createElement("div");d.className="w";
+  d.appendChild(document.createTextNode(document.getElementById("m").value+" 💗"));
+  var b=document.createElement("b");b.textContent="— "+document.getElementById("n").value;
+  d.appendChild(b);
+  document.getElementById("wishes").prepend(d);
+  ev.target.reset();party();
+};
+window.addEventListener("load",party);
+</script>
+</body>
+</html>
